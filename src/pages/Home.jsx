@@ -3,11 +3,15 @@ import { Row, Col } from 'react-bootstrap'
 import { Card } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import { useFetch } from '../hooks/useFetch';
+import { useDispatch } from 'react-redux';
+import { addToWishlist } from '../redux/slices/wishlistSlice';
+import { addToCart } from '../redux/slices/cartSlice';
 function Home() {
 
   const data = useFetch("https://dummyjson.com/products")
   // console.log(data)
 
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -15,7 +19,7 @@ function Home() {
         {
           data && data.length > 0 ?
             data.map((item) => (
-              <Col className='mb-5 d-flex justify-content-center'>
+              <Col lg={3} className='mb-5 d-flex justify-content-center'>
                 <Card style={{ width: '18rem' }}>
                   <Card.Img variant="top" src={item.thumbnail} style={{ height: '200px' }} />
                   <Card.Body>
@@ -26,8 +30,8 @@ function Home() {
                       <p className='text-center text-light bg-dark rounded-5' >Price : $ {item.price}</p>
                     </Card.Text>
                     <div className='d-flex align-items-center justify-content-between'>
-                      <Button variant="outline-danger"><i class="fa-solid fa-heart"></i></Button>
-                      <Button variant="outline-success"><i class="fa-solid fa-cart-plus"></i></Button>
+                      <Button variant="outline-danger" onClick={()=>dispatch(addToWishlist(item))}><i class="fa-solid fa-heart"></i></Button>
+                      <Button variant="outline-success" onClick={()=>dispatch(addToCart(item))}><i class="fa-solid fa-cart-plus"></i></Button>
                     </div>
                   </Card.Body>
                 </Card>
