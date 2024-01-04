@@ -1,7 +1,13 @@
 
 ekart project using redux toolkit.
 
-Steps To Clone:
+ steps to start:
+
+ 1. clone this repo using git clone
+ 2. install node packages Using npm run
+ 3. cd project_folder
+ 4. To run The project : npm start
+ 5. 
 
 
 
