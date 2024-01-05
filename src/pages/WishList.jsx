@@ -1,20 +1,23 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import { removeFromWishlist } from '../redux/slices/wishlistSlice';
+import { addToCart } from '../redux/slices/cartSlice';
 function WishList() {
 
   const wishlistarray = useSelector((state) => state.wishlistReducer);
   console.log("wishlist array")
   console.log(wishlistarray)
-
+  const dispatch = useDispatch()
   return (
     <>
-    
-      <Row  style={{marginTop:'150px'}}>
-      <h1 className='text-center'>Wishlist</h1>
-      <Link to='/' className='m-3' style={{textDecoration:'none',color:'blue'}}><i class="fa-solid fa-arrow-left m-3"></i>Back to home</Link>
+
+      <Row style={{ marginTop: '150px' }}>
+        <h1 className='text-center'>Wishlist</h1>
+        <Link to='/' className='m-3' style={{ textDecoration: 'none', color: 'blue' }}><i class="fa-solid fa-arrow-left m-3"></i>Back to home</Link>
         {
           wishlistarray && wishlistarray.length > 0 ?
             wishlistarray.map((item) => (
@@ -28,7 +31,10 @@ function WishList() {
                       </p>
                       <p className='text-center text-light bg-dark rounded-5' >Price : $ {item.price}</p>
                     </Card.Text>
-
+                    <div className='d-flex align-items-center justify-content-between'>
+                      <Button variant="outline-danger" onClick={()=>dispatch(removeFromWishlist(item.id))} ><i class="fa-solid fa-trash"></i></Button>
+                      <Button variant="outline-success" onClick={()=>dispatch(addToCart(item))}><i class="fa-solid fa-cart-plus"></i></Button>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>)) : <p>No Item To Display</p>
